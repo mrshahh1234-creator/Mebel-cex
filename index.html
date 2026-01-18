@@ -3,201 +3,196 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TABRIZ group | Professional Panel</title>
+    <title>TABRIZ group | Dashboard</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
-        :root { --accent: #ff9800; --dark-bg: #121212; --card-bg: #1e1e1e; }
-        body { background: var(--dark-bg); font-family: 'Segoe UI', Roboto, sans-serif; color: #e0e0e0; }
+        :root { --gitlab-purple: #6b4fbb; --gitlab-orange: #e24329; --bg-gray: #f0f1f4; --sidebar-width: 240px; }
+        body { background: var(--bg-gray); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; font-size: 14px; }
         
-        /* Header */
-        .navbar { background: #000; border-bottom: 2px solid var(--accent); padding: 15px 0; }
-        .navbar-brand { font-weight: 900; color: var(--accent) !important; letter-spacing: 2px; font-size: 24px; }
+        /* Sidebar GitLab style */
+        .sidebar { width: var(--sidebar-width); height: 100vh; position: fixed; background: #fff; border-right: 1px solid #dbdbdb; padding: 20px 0; }
+        .sidebar-brand { padding: 0 20px 20px; border-bottom: 1px solid #f0f0f0; margin-bottom: 15px; }
+        .nav-link { color: #333; padding: 10px 20px; display: flex; align-items: center; text-decoration: none; }
+        .nav-link:hover { background: #f2f2f2; }
+        .nav-link.active { background: #e9e9e9; border-left: 3px solid var(--gitlab-orange); font-weight: 600; }
+        .nav-link i { margin-right: 12px; font-size: 18px; color: #666; }
 
-        /* Auth & Order Cards */
-        .main-card { background: var(--card-bg); border-radius: 20px; border: 1px solid #333; padding: 30px; margin-top: 40px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
-        .step-title { color: var(--accent); border-left: 4px solid var(--accent); padding-left: 15px; margin-bottom: 25px; font-weight: 700; }
+        /* Main Content */
+        .main-content { margin-left: var(--sidebar-width); padding: 30px; }
+        .gitlab-card { background: #fff; border: 1px solid #dbdbdb; border-radius: 4px; overflow: hidden; }
+        .card-header { background: #fafafa; padding: 12px 20px; border-bottom: 1px solid #dbdbdb; font-weight: 600; }
+        .card-body { padding: 20px; }
 
-        /* Form Elements */
-        .form-control, .form-select { background: #2a2a2a; border: 1px solid #444; color: white; border-radius: 10px; padding: 12px; }
-        .form-control:focus { background: #333; border-color: var(--accent); color: white; box-shadow: none; }
-        .form-label { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: #aaa; }
+        /* GitLab Input Style */
+        .form-label { font-weight: 600; color: #333; margin-bottom: 5px; }
+        .form-control { border-radius: 4px; border: 1px solid #8c8c8c; }
+        .form-control:focus { border-color: var(--gitlab-purple); box-shadow: 0 0 0 1px var(--gitlab-purple); }
 
-        /* Table */
-        .table { color: #e0e0e0; border-color: #333; margin-bottom: 0; }
-        .table thead { background: #000; }
-        .table-input input { background: transparent; border: none; color: white; width: 100%; text-align: center; }
-        .table-input input::placeholder { color: #555; }
+        /* Table GitLab style */
+        .gl-table { width: 100%; border-collapse: collapse; }
+        .gl-table th { background: #fafafa; border-bottom: 2px solid #dbdbdb; padding: 10px; text-align: left; color: #666; font-size: 12px; text-transform: uppercase; }
+        .gl-table td { border-bottom: 1px solid #f0f0f0; padding: 8px; vertical-align: middle; }
+        .gl-table input, .gl-table select { border: 1px solid #ccc; border-radius: 3px; padding: 5px; font-size: 13px; width: 100%; }
 
         /* Buttons */
-        .btn-main { background: var(--accent); color: #000; border: none; border-radius: 12px; font-weight: 800; padding: 14px; transition: 0.3s; }
-        .btn-main:hover { background: #e68a00; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3); }
-        .btn-outline-light { border-radius: 12px; border-color: #444; color: #aaa; }
-
+        .btn-gl-success { background: #108548; color: white; border: none; font-weight: 600; padding: 8px 16px; border-radius: 4px; }
+        .btn-gl-success:hover { background: #0d6d3b; color: white; }
+        
         .hidden { display: none; }
-        .academy-footer { position: fixed; bottom: 15px; right: 25px; font-size: 11px; color: #555; font-weight: 700; letter-spacing: 1px; }
+        .academy-footer { position: fixed; bottom: 10px; right: 20px; font-size: 11px; color: #999; font-weight: bold; }
+        
+        @media (max-width: 768px) {
+            .sidebar { display: none; }
+            .main-content { margin-left: 0; padding: 15px; }
+        }
     </style>
 </head>
 <body>
 
-<nav class="navbar">
-    <div class="container d-flex justify-content-between">
-        <a class="navbar-brand" href="#">TABRIZ GROUP</a>
-        <div class="text-muted d-none d-md-block">Professional Mebelchilar Paneli</div>
+<div class="sidebar">
+    <div class="sidebar-brand">
+        <h5 class="m-0 fw-bold" style="color: var(--gitlab-orange);">TABRIZ GROUP</h5>
     </div>
-</nav>
+    <nav>
+        <a href="#" class="nav-link active"><i class="bi bi-file-earmark-plus"></i> Yangi buyurtma</a>
+        <a href="#" class="nav-link"><i class="bi bi-list-task"></i> Buyurtmalar tarixi</a>
+        <a href="#" class="nav-link"><i class="bi bi-gear"></i> Sozlamalar</a>
+    </nav>
+</div>
 
-<div class="container pb-5">
-    <div id="authSection" class="main-card mx-auto" style="max-width: 450px;">
-        <h4 class="step-title text-uppercase">Tizimga kirish</h4>
-        <div class="mb-3">
-            <label class="form-label">Ismingiz</label>
-            <input type="text" id="userName" class="form-control" placeholder="Masalan: Akmal">
-        </div>
-        <div class="mb-3">
-            <label class="form-label">Telefon raqamingiz</label>
-            <input type="tel" id="userPhone" class="form-control" placeholder="+998 90 123 45 67">
-        </div>
-        <button onclick="sendAuth()" class="btn btn-main w-100 mb-3">
-            <i class="bi bi-shield-lock-fill me-2"></i>KOD OLISH
-        </button>
-        
-        <div id="codeBlock" class="hidden border-top border-secondary pt-3 mt-3">
-            <label class="form-label text-warning">Telegram (@raspilnaya_bot) дан келган код:</label>
-            <input type="text" id="authCode" class="form-control text-center fs-4 fw-bold mb-3" placeholder="----">
-            <button onclick="verifyAndLogin()" class="btn btn-light w-100">KIRISH</button>
-        </div>
-    </div>
-
-    <div id="orderSection" class="main-card hidden animate__animated animate__fadeIn">
-        <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary">
-            <h3 class="fw-bold m-0" style="color: var(--accent);">YANGI BUYURTMA</h3>
-            <span class="badge bg-dark border border-secondary p-2" id="userDisplay"></span>
-        </div>
-        
-        <div class="row g-3 mb-4">
-            <div class="col-md-6">
-                <label class="form-label">Material nomi ва қалинлиги</label>
-                <input type="text" id="material" class="form-control" placeholder="ЛДСП Egger 18мм...">
-            </div>
-            <div class="col-md-6">
-                <label class="form-label">Кромка номи</label>
-                <input type="text" id="edge" class="form-control" placeholder="ПВХ 2.0мм Оқ...">
+<div class="main-content">
+    
+    <div id="authSection" class="mx-auto" style="max-width: 400px; margin-top: 100px;">
+        <div class="gitlab-card">
+            <div class="card-header">Tizimga kirish</div>
+            <div class="card-body">
+                <div class="mb-3">
+                    <label class="form-label">Ism</label>
+                    <input type="text" id="userName" class="form-control">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Telefon</label>
+                    <input type="tel" id="userPhone" class="form-control" placeholder="+998">
+                </div>
+                <button onclick="sendAuth()" class="btn btn-gl-success w-100">Kodni olish</button>
+                
+                <div id="codeBlock" class="mt-3 hidden">
+                    <label class="form-label">Telegram kod</label>
+                    <input type="text" id="authCode" class="form-control mb-2 text-center">
+                    <button onclick="verifyAndLogin()" class="btn btn-dark w-100">Kirish</button>
+                </div>
             </div>
         </div>
+    </div>
 
-        <div class="table-responsive rounded-3 border border-secondary">
-            <table class="table table-dark table-hover m-0" id="orderTable">
-                <thead>
-                    <tr class="small">
-                        <th>Nomi</th>
-                        <th>Bo'yi (mm)</th>
-                        <th>Eni (mm)</th>
-                        <th>Soni</th>
-                        <th>Kromka</th>
-                        <th>Burash</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr class="table-input">
-                        <td><input type="text" placeholder="Eshik"></td>
-                        <td><input type="number" placeholder="720"></td>
-                        <td><input type="number" placeholder="450"></td>
-                        <td><input type="number" placeholder="1"></td>
-                        <td><input type="text" placeholder="B2+E1"></td>
-                        <td>
-                            <select class="form-select form-select-sm">
-                                <option value="Ha">Ha</option>
-                                <option value="Yo'q">Yo'q</option>
-                            </select>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+    <div id="orderSection" class="hidden">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h4 class="m-0 fw-bold">Yangi buyurtma yaratish</h4>
+            <div id="userDisplay" class="badge bg-secondary p-2"></div>
         </div>
-        
-        <div class="mt-4 d-flex flex-column flex-md-row justify-content-between gap-3">
-            <button class="btn btn-outline-light" onclick="addRow()">
-                <i class="bi bi-plus-lg me-2"></i>QATOR QO'SHISH
-            </button>
-            <button class="btn btn-main px-5" onclick="sendOrder()">
-                <i class="bi bi-telegram me-2"></i>BUYURTMANI YUBORISH
-            </button>
+
+        <div class="gitlab-card mb-4">
+            <div class="card-header">Asosiy ma'lumotlar</div>
+            <div class="card-body row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Material (LDSP/MDF)</label>
+                    <input type="text" id="material" class="form-control" placeholder="Egger 18mm Oq">
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label">Kromka turi</label>
+                    <input type="text" id="edge" class="form-control" placeholder="0.45mm PVX">
+                </div>
+            </div>
+        </div>
+
+        <div class="gitlab-card">
+            <div class="card-header d-flex justify-content-between">
+                <span>Detallar jadvali</span>
+                <button class="btn btn-sm btn-outline-secondary" onclick="addRow()">+ Qator</button>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="gl-table" id="orderTable">
+                        <thead>
+                            <tr>
+                                <th>Nomi</th>
+                                <th>Bo'yi (mm)</th>
+                                <th>Eni (mm)</th>
+                                <th>Soni</th>
+                                <th>Kromka (B1 B2 E1 E2)</th>
+                                <th>Burash</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><input type="text" placeholder="Masalan: Polka"></td>
+                                <td><input type="number" placeholder="0"></td>
+                                <td><input type="number" placeholder="0"></td>
+                                <td><input type="number" placeholder="0"></td>
+                                <td><input type="text" placeholder="B1+E1"></td>
+                                <td>
+                                    <select>
+                                        <option value="Ha">Ha</option>
+                                        <option value="Yo'q">Yo'q</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="card-body border-top text-end">
+                <button class="btn btn-gl-success btn-lg" onclick="sendOrder()">
+                    <i class="bi bi-telegram"></i> Telegramga yuborish
+                </button>
+            </div>
         </div>
     </div>
 </div>
 
-<div class="academy-footer">
-    by MUSTAFAYEV ACADEMY
-</div>
+<div class="academy-footer">by MUSTAFAYEV ACADEMY</div>
 
 <script>
-    // Маълумотлар созланди
     const TG_TOKEN = "7927717291:AAG4h_LbZoY-1s2y0_zzNoCFudrU7pPDNas";
     const CHAT_ID = "1015769230";
 
     function addRow() {
         let table = document.getElementById("orderTable").getElementsByTagName('tbody')[0];
         let row = table.insertRow();
-        row.className = "table-input";
-        row.innerHTML = `<td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td><td><select class="form-select form-select-sm"><option value="Ha">Ha</option><option value="Yo'q">Yo'q</option></select></td>`;
+        row.innerHTML = `<td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td><td><select><option value="Ha">Ha</option><option value="Yo'q">Yo'q</option></select></td>`;
     }
 
     async function sendAuth() {
         const name = document.getElementById('userName').value;
         const phone = document.getElementById('userPhone').value;
-        if(!name || !phone) return alert("Iltimos, ism va telefonni kiriting!");
-
+        if(!name || !phone) return alert("Ma'lumotlarni kiriting!");
         const code = Math.floor(1000 + Math.random() * 9000); 
         localStorage.setItem('auth_code', code); 
-
-        const text = `🔑 TABRIZ GROUP: KIRISH KODI\n\nFoydalanuvchi: ${name}\nTel: ${phone}\nKod: ${code}`;
-        
-        try {
-            await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
-            document.getElementById('codeBlock').classList.remove('hidden');
-            alert("Kirish kodi Telegram орқали юборилди!");
-        } catch(e) {
-            alert("Xatolik! Bot ma'lumotlarini tekshiring.");
-        }
+        const text = `🔑 TABRIZ: KIRISH KODI\n👤 ${name}\n📱 ${phone}\n🔢 KOD: ${code}`;
+        await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
+        document.getElementById('codeBlock').classList.remove('hidden');
     }
 
     function verifyAndLogin() {
-        const inputCode = document.getElementById('authCode').value;
-        const savedCode = localStorage.getItem('auth_code');
-
-        if(inputCode === savedCode) {
+        if(document.getElementById('authCode').value === localStorage.getItem('auth_code')) {
             document.getElementById('authSection').classList.add('hidden');
             document.getElementById('orderSection').classList.remove('hidden');
             document.getElementById('userDisplay').innerText = document.getElementById('userName').value;
-        } else {
-            alert("Kod xato!");
-        }
+        } else { alert("Xato код!"); }
     }
 
     async function sendOrder() {
         const material = document.getElementById('material').value;
-        const edge = document.getElementById('edge').value;
         const user = document.getElementById('userName').value;
-        
-        let orderDetails = `📥 YANGI BUYURTMA (TABRIZ group)\n👤 Mijoz: ${user}\n🪵 Material: ${material}\n🎨 Kromka: ${edge}\n\n📐 DETALLAR:\n`;
-        
-        let rows = document.querySelectorAll("#orderTable tbody tr");
-        rows.forEach((row, index) => {
-            let inputs = row.querySelectorAll("input, select");
-            if(inputs[0].value) {
-                orderDetails += `${index+1}. ${inputs[0].value} | ${inputs[1].value}x${inputs[2].value} | ${inputs[3].value} шт | K: ${inputs[4].value} | Burish: ${inputs[5].value}\n`;
-            }
+        let details = `📥 BUYURTMA: ${user}\n🪵 Material: ${material}\n\n`;
+        document.querySelectorAll("#orderTable tbody tr").forEach((row, i) => {
+            let inp = row.querySelectorAll("input, select");
+            if(inp[0].value) details += `${i+1}. ${inp[0].value} | ${inp[1].value}x${inp[2].value} | ${inp[3].value} шт | K: ${inp[4].value} | Burash: ${inp[5].value}\n`;
         });
-
-        try {
-            await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(orderDetails)}`);
-            alert("Buyurtma qabul qilindi! Tez orada aloqaga chiqamiz.");
-        } catch(e) {
-            alert("Yuborishda xatolik yuz berdi.");
-        }
+        await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(details)}`);
+        alert("Buyurtma yuborildi!");
     }
 </script>
-
 </body>
 </html>
