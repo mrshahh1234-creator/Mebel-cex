@@ -4,17 +4,24 @@
     <meta charset="UTF-8">
     <title>TABRIZ | Akkaunt</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: url('https://images.unsplash.com/photo-1530124560676-43099fe8f0db?auto=format&fit=crop&q=80&w=2070') no-repeat center center fixed; background-size: cover; }
+        .gl-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); padding: 50px; border-radius: 15px; margin-top: 100px; }
+        .academy { position: fixed; bottom: 15px; right: 20px; color: white; font-weight: bold; }
+    </style>
 </head>
-<body class="bg-light p-5">
-    <div class="container bg-white p-5 border shadow-sm" style="max-width: 500px;">
-        <h4 class="fw-bold border-bottom pb-3">Foydalanuvchi profili</h4>
-        <div class="my-4">
-            <p><b>Ism:</b> <span id="n"></span></p>
-            <p><b>Tel:</b> <span id="p"></span></p>
-            <p><b>Status:</b> <span class="badge bg-success">Faol</span></p>
+<body>
+    <div class="container d-flex justify-content-center">
+        <div class="gl-card text-center" style="width: 500px;">
+            <h1 class="fw-bold" style="color: #e24329;">TABRIZ group</h1>
+            <h4 class="mt-4">Foydalanuvchi akkaunti</h4>
+            <hr>
+            <h5 id="n" class="fw-bold text-primary"></h5>
+            <p id="p" class="text-muted"></p>
+            <button onclick="location.href='material.html'" class="btn btn-dark w-100 mt-4">BUYURTMA BOSHLASH</button>
         </div>
-        <button onclick="location.href='material.html'" class="btn btn-primary w-100">YANGI BUYURTMA BOSHLASH</button>
     </div>
+    <div class="academy">MUSTAFAYEV ACADEMY</div>
     <script>
         document.getElementById('n').innerText = localStorage.getItem('u_name');
         document.getElementById('p').innerText = localStorage.getItem('u_phone');
