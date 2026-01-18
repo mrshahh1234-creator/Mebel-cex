@@ -7,104 +7,100 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
     <style>
-        :root { --accent: #f39c12; --dark: #2c3e50; }
-        body { background: #f0f2f5; font-family: 'Inter', sans-serif; color: #333; }
+        :root { --accent: #ff9800; --dark-bg: #121212; --card-bg: #1e1e1e; }
+        body { background: var(--dark-bg); font-family: 'Segoe UI', Roboto, sans-serif; color: #e0e0e0; }
         
-        /* Шапка */
-        .navbar { background: linear-gradient(135deg, #1a1a1a, #2c3e50); border-bottom: 3px solid var(--accent); }
-        .navbar-brand { font-weight: 800; letter-spacing: 1px; color: var(--accent) !important; }
+        /* Header */
+        .navbar { background: #000; border-bottom: 2px solid var(--accent); padding: 15px 0; }
+        .navbar-brand { font-weight: 900; color: var(--accent) !important; letter-spacing: 2px; font-size: 24px; }
 
-        /* Карточки */
-        .main-card { background: white; border: none; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); padding: 30px; margin-top: 30px; }
-        .step-header { border-left: 5px solid var(--accent); padding-left: 15px; margin-bottom: 25px; }
+        /* Auth & Order Cards */
+        .main-card { background: var(--card-bg); border-radius: 20px; border: 1px solid #333; padding: 30px; margin-top: 40px; box-shadow: 0 15px 35px rgba(0,0,0,0.5); }
+        .step-title { color: var(--accent); border-left: 4px solid var(--accent); padding-left: 15px; margin-bottom: 25px; font-weight: 700; }
 
-        /* Ввод данных */
-        .form-control { border-radius: 10px; padding: 12px; border: 1px solid #ddd; }
-        .form-control:focus { border-color: var(--accent); box-shadow: 0 0 0 0.25 margin-top: rgba(243, 156, 18, 0.25); }
+        /* Form Elements */
+        .form-control, .form-select { background: #2a2a2a; border: 1px solid #444; color: white; border-radius: 10px; padding: 12px; }
+        .form-control:focus { background: #333; border-color: var(--accent); color: white; box-shadow: none; }
+        .form-label { font-size: 13px; text-transform: uppercase; letter-spacing: 1px; color: #aaa; }
 
-        /* Таблица */
-        .table-responsive { border-radius: 15px; overflow: hidden; background: #fff; }
-        .table thead { background: var(--dark); color: white; }
-        .table-input input { border: none; background: transparent; width: 100%; outline: none; }
-        
-        /* Кнопки */
-        .btn-main { background: var(--accent); color: white; border-radius: 12px; font-weight: 700; padding: 12px 25px; transition: 0.3s; border: none; }
-        .btn-main:hover { background: #e67e22; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(230, 126, 34, 0.4); }
+        /* Table */
+        .table { color: #e0e0e0; border-color: #333; margin-bottom: 0; }
+        .table thead { background: #000; }
+        .table-input input { background: transparent; border: none; color: white; width: 100%; text-align: center; }
+        .table-input input::placeholder { color: #555; }
+
+        /* Buttons */
+        .btn-main { background: var(--accent); color: #000; border: none; border-radius: 12px; font-weight: 800; padding: 14px; transition: 0.3s; }
+        .btn-main:hover { background: #e68a00; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(255, 152, 0, 0.3); }
+        .btn-outline-light { border-radius: 12px; border-color: #444; color: #aaa; }
 
         .hidden { display: none; }
-        .academy-footer { position: fixed; bottom: 15px; right: 25px; font-size: 13px; color: #95a5a6; font-weight: 600; text-transform: uppercase; }
+        .academy-footer { position: fixed; bottom: 15px; right: 25px; font-size: 11px; color: #555; font-weight: 700; letter-spacing: 1px; }
     </style>
 </head>
 <body>
 
-<nav class="navbar navbar-dark">
-    <div class="container">
+<nav class="navbar">
+    <div class="container d-flex justify-content-between">
         <a class="navbar-brand" href="#">TABRIZ GROUP</a>
-        <span class="text-white small">Mebelchilar uchun maxsus platforma</span>
+        <div class="text-muted d-none d-md-block">Professional Mebelchilar Paneli</div>
     </div>
 </nav>
 
 <div class="container pb-5">
-    
     <div id="authSection" class="main-card mx-auto" style="max-width: 450px;">
-        <div class="step-header">
-            <h4 class="fw-bold m-0">Kirish</h4>
-        </div>
+        <h4 class="step-title text-uppercase">Tizimga kirish</h4>
         <div class="mb-3">
-            <label class="form-label small fw-bold">Ismingiz</label>
+            <label class="form-label">Ismingiz</label>
             <input type="text" id="userName" class="form-control" placeholder="Masalan: Akmal">
         </div>
         <div class="mb-3">
-            <label class="form-label small fw-bold">Telefon raqamingiz</label>
+            <label class="form-label">Telefon raqamingiz</label>
             <input type="tel" id="userPhone" class="form-control" placeholder="+998 90 123 45 67">
         </div>
-        <button onclick="sendAuthToTelegram()" class="btn btn-main w-100">
-            <i class="bi bi-send-fill me-2"></i>Kodni olish
+        <button onclick="sendAuth()" class="btn btn-main w-100 mb-3">
+            <i class="bi bi-shield-lock-fill me-2"></i>KOD OLISH
         </button>
         
-        <div id="codeBlock" class="mt-4 hidden animate__animated animate__fadeIn">
-            <label class="form-label small fw-bold text-success">Telegramga yuborilgan kodni kiriting</label>
-            <input type="text" id="authCode" class="form-control mb-3 text-center fw-bold" style="letter-spacing: 5px;" placeholder="0000">
-            <button onclick="verifyAndLogin()" class="btn btn-dark w-100 py-2">Tasdiqlash</button>
+        <div id="codeBlock" class="hidden border-top border-secondary pt-3 mt-3">
+            <label class="form-label text-warning">Telegram (@raspilnaya_bot) дан келган код:</label>
+            <input type="text" id="authCode" class="form-control text-center fs-4 fw-bold mb-3" placeholder="----">
+            <button onclick="verifyAndLogin()" class="btn btn-light w-100">KIRISH</button>
         </div>
     </div>
 
     <div id="orderSection" class="main-card hidden animate__animated animate__fadeIn">
-        <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
-            <h3 class="fw-bold m-0 text-dark">Yangi buyurtma</h3>
-            <span class="badge bg-success p-2" id="userDisplay"></span>
+        <div class="d-flex justify-content-between align-items-center mb-4 pb-2 border-bottom border-secondary">
+            <h3 class="fw-bold m-0" style="color: var(--accent);">YANGI BUYURTMA</h3>
+            <span class="badge bg-dark border border-secondary p-2" id="userDisplay"></span>
         </div>
         
         <div class="row g-3 mb-4">
             <div class="col-md-6">
-                <div class="p-3 bg-light rounded-3">
-                    <label class="form-label small fw-bold text-muted text-uppercase">Material nomi</label>
-                    <input type="text" id="material" class="form-control" placeholder="Egger, Kronospan...">
-                </div>
+                <label class="form-label">Material nomi ва қалинлиги</label>
+                <input type="text" id="material" class="form-control" placeholder="ЛДСП Egger 18мм...">
             </div>
             <div class="col-md-6">
-                <div class="p-3 bg-light rounded-3">
-                    <label class="form-label small fw-bold text-muted text-uppercase">Kromka nomi/o'lchami</label>
-                    <input type="text" id="edge" class="form-control" placeholder="2.0mm Oq...">
-                </div>
+                <label class="form-label">Кромка номи</label>
+                <input type="text" id="edge" class="form-control" placeholder="ПВХ 2.0мм Оқ...">
             </div>
         </div>
 
-        <div class="table-responsive shadow-sm border">
-            <table class="table table-hover align-middle m-0" id="orderTable">
+        <div class="table-responsive rounded-3 border border-secondary">
+            <table class="table table-dark table-hover m-0" id="orderTable">
                 <thead>
-                    <tr class="small text-uppercase">
-                        <th width="25%">Nomi</th>
-                        <th width="15%">Bo'yi (mm)</th>
-                        <th width="15%">Eni (mm)</th>
-                        <th width="10%">Soni</th>
-                        <th width="20%">Kromka</th>
-                        <th width="15%">Burash</th>
+                    <tr class="small">
+                        <th>Nomi</th>
+                        <th>Bo'yi (mm)</th>
+                        <th>Eni (mm)</th>
+                        <th>Soni</th>
+                        <th>Kromka</th>
+                        <th>Burash</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr class="table-input">
-                        <td><input type="text" placeholder="Masalan: Eshik"></td>
+                        <td><input type="text" placeholder="Eshik"></td>
                         <td><input type="number" placeholder="720"></td>
                         <td><input type="number" placeholder="450"></td>
                         <td><input type="number" placeholder="1"></td>
@@ -120,12 +116,12 @@
             </table>
         </div>
         
-        <div class="mt-4 d-flex justify-content-between">
-            <button class="btn btn-outline-dark" onclick="addRow()">
-                <i class="bi bi-plus-circle me-2"></i>Qator qo'shish
+        <div class="mt-4 d-flex flex-column flex-md-row justify-content-between gap-3">
+            <button class="btn btn-outline-light" onclick="addRow()">
+                <i class="bi bi-plus-lg me-2"></i>QATOR QO'SHISH
             </button>
-            <button class="btn btn-main px-5" onclick="sendOrderToTelegram()">
-                <i class="bi bi-check-all me-2"></i>BUYURTMANI YUBORISH
+            <button class="btn btn-main px-5" onclick="sendOrder()">
+                <i class="bi bi-telegram me-2"></i>BUYURTMANI YUBORISH
             </button>
         </div>
     </div>
@@ -136,9 +132,9 @@
 </div>
 
 <script>
-    // --- ТЕЛЕГРАМ СОЗЛАМАЛАРИ (БУ ЕРНИ ТЎЛДИРИНГ) ---
-    const TG_TOKEN = "ВАШ_ТОКЕН_БОТА"; // BotFather'dan olingan token
-    const CHAT_ID = "ВАШ_ID"; // Sizning yoki guruhning ID'si
+    // Маълумотлар созланди
+    const TG_TOKEN = "7927717291:AAG4h_LbZoY-1s2y0_zzNoCFudrU7pPDNas";
+    const CHAT_ID = "1015769230";
 
     function addRow() {
         let table = document.getElementById("orderTable").getElementsByTagName('tbody')[0];
@@ -147,20 +143,23 @@
         row.innerHTML = `<td><input type="text"></td><td><input type="number"></td><td><input type="number"></td><td><input type="number"></td><td><input type="text"></td><td><select class="form-select form-select-sm"><option value="Ha">Ha</option><option value="Yo'q">Yo'q</option></select></td>`;
     }
 
-    async function sendAuthToTelegram() {
+    async function sendAuth() {
         const name = document.getElementById('userName').value;
         const phone = document.getElementById('userPhone').value;
-        if(!name || !phone) return alert("Ma'lumotlarni to'ldiring!");
+        if(!name || !phone) return alert("Iltimos, ism va telefonni kiriting!");
 
         const code = Math.floor(1000 + Math.random() * 9000); 
         localStorage.setItem('auth_code', code); 
 
-        const text = `🔑 KIRISH KODI\nFoydalanuvchi: ${name}\nTel: ${phone}\nKod: ${code}`;
+        const text = `🔑 TABRIZ GROUP: KIRISH KODI\n\nFoydalanuvchi: ${name}\nTel: ${phone}\nKod: ${code}`;
         
-        await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
-        
-        document.getElementById('codeBlock').classList.remove('hidden');
-        alert("Kod Telegram botga yuborildi!");
+        try {
+            await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(text)}`);
+            document.getElementById('codeBlock').classList.remove('hidden');
+            alert("Kirish kodi Telegram орқали юборилди!");
+        } catch(e) {
+            alert("Xatolik! Bot ma'lumotlarini tekshiring.");
+        }
     }
 
     function verifyAndLogin() {
@@ -172,26 +171,31 @@
             document.getElementById('orderSection').classList.remove('hidden');
             document.getElementById('userDisplay').innerText = document.getElementById('userName').value;
         } else {
-            alert("Kod noto'g'ri!");
+            alert("Kod xato!");
         }
     }
 
-    async function sendOrderToTelegram() {
+    async function sendOrder() {
         const material = document.getElementById('material').value;
         const edge = document.getElementById('edge').value;
         const user = document.getElementById('userName').value;
         
-        let orderDetails = `📦 YANGI BUYURTMA\n👤 Mijoz: ${user}\n🪵 Material: ${material}\n🎨 Kromka: ${edge}\n\n📐 DETALLAR:\n`;
+        let orderDetails = `📥 YANGI BUYURTMA (TABRIZ group)\n👤 Mijoz: ${user}\n🪵 Material: ${material}\n🎨 Kromka: ${edge}\n\n📐 DETALLAR:\n`;
         
         let rows = document.querySelectorAll("#orderTable tbody tr");
         rows.forEach((row, index) => {
             let inputs = row.querySelectorAll("input, select");
-            orderDetails += `${index+1}. ${inputs[0].value} | ${inputs[1].value}x${inputs[2].value} | ${inputs[3].value} dona | Kromka: ${inputs[4].value} | Burash: ${inputs[5].value}\n`;
+            if(inputs[0].value) {
+                orderDetails += `${index+1}. ${inputs[0].value} | ${inputs[1].value}x${inputs[2].value} | ${inputs[3].value} шт | K: ${inputs[4].value} | Burish: ${inputs[5].value}\n`;
+            }
         });
 
-        await fetch(`https://api.telegram.org/bot${7927717291:AAG4h_LbZoY-1s2y0_zzNoCFudrU7pPDNas}/sendMessage?chat_id=${1015769230}&text=${encodeURIComponent(orderDetails)}`);
-        
-        alert("Buyurtma muvaffaqiyatli yuborildi!");
+        try {
+            await fetch(`https://api.telegram.org/bot${TG_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(orderDetails)}`);
+            alert("Buyurtma qabul qilindi! Tez orada aloqaga chiqamiz.");
+        } catch(e) {
+            alert("Yuborishda xatolik yuz berdi.");
+        }
     }
 </script>
 
