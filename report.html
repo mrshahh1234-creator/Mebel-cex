@@ -4,18 +4,27 @@
     <meta charset="UTF-8">
     <title>TABRIZ | Hisobot</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: url('https://images.unsplash.com/photo-1454165833467-03a68d638211?auto=format&fit=crop&q=80&w=2070') no-repeat center center fixed; background-size: cover; }
+        .gl-card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); padding: 50px; border-radius: 15px; margin-top: 50px; }
+        .academy { position: fixed; bottom: 15px; right: 20px; color: white; font-weight: bold; }
+    </style>
 </head>
-<body class="p-5">
-    <div class="container border p-5 shadow bg-white text-center" style="max-width: 600px;">
-        <h2 class="text-success fw-bold">6. YAKUNIY HISOBOT</h2>
-        <hr>
-        <div class="text-start mb-4">
-            <p><b>Mijoz:</b> <span id="un"></span></p>
-            <p><b>Material:</b> <span id="um"></span></p>
-            <p><b>Kromka:</b> <span id="uk"></span></p>
+<body>
+    <div class="container d-flex justify-content-center">
+        <div class="gl-card text-center" style="width: 600px;">
+            <h1 class="fw-bold" style="color: #e24329;">TABRIZ group</h1>
+            <h3 class="text-success fw-bold">6. TAYYOR HISOBOT</h3>
+            <hr>
+            <div class="text-start">
+                <p><b>Mijoz:</b> <span id="un"></span></p>
+                <p><b>Material:</b> <span id="um"></span></p>
+                <p><b>Kromka:</b> <span id="uk"></span></p>
+            </div>
+            <button onclick="finish()" class="btn btn-success w-100 py-3 fw-bold mt-4">TELEGRAMGA YUBORISH (@raspilnaya_bot)</button>
         </div>
-        <button onclick="finish()" class="btn btn-success w-100 py-3 fw-bold">@raspilnaya_bot'ga YUBORISH</button>
     </div>
+    <div class="academy">MUSTAFAYEV ACADEMY</div>
     <script>
         document.getElementById('un').innerText = localStorage.getItem('u_name');
         document.getElementById('um').innerText = localStorage.getItem('mat');
@@ -24,9 +33,9 @@
         async function finish() {
             const T = "7927717291:AAG4h_LbZoY-1s2y0_zzNoCFudrU7pPDNas";
             const ID = "1015769230";
-            const text = `✅ YANGI BUYURTMA\n👤 Mijoz: ${localStorage.getItem('u_name')}\n🪵 Mat: ${localStorage.getItem('mat')}\n🎨 Kro: ${localStorage.getItem('kro')}`;
+            const text = `✅ BUYURTMA: ${localStorage.getItem('u_name')}\n🪵 Material: ${localStorage.getItem('mat')}\n🎨 Kromka: ${localStorage.getItem('kro')}`;
             await fetch(`https://api.telegram.org/bot${T}/sendMessage?chat_id=${ID}&text=${encodeURIComponent(text)}`);
-            alert("Buyurtma yuborildi!");
+            alert("Muvaffaqiyatli yuborildi!");
         }
     </script>
 </body>
