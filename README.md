@@ -1,2 +1,0 @@
-# Mebel-cex
-Fabrica
