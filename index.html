@@ -20,7 +20,6 @@
             color: white;
         }
 
-        /* Glassmorphism - Shaffof kartochkalar */
         .glass-card {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(15px);
@@ -29,14 +28,12 @@
             box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
         }
 
-        /* Firmaning yashil va tilla ranglari */
-        .brand-green { color: #004d40; } /* Logotipdagi yashil */
-        .brand-gold { color: #d4af37; } /* Tilla rang */
+        .brand-gold { color: #d4af37; }
         .bg-brand-gold { background-color: #d4af37; }
 
         .input-cell {
             background: rgba(0, 0, 0, 0.3);
-            border: 1px solid rgba(212, 175, 55, 0.3); /* Tilla rangli border */
+            border: 1px solid rgba(212, 175, 55, 0.3);
             color: white;
             border-radius: 12px;
             padding: 10px;
@@ -45,16 +42,8 @@
             transition: 0.3s;
         }
 
-        .input-cell:focus {
-            border-color: #d4af37;
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        .table-cell {
-            border: 1px solid rgba(212, 175, 55, 0.2);
-            padding: 8px;
-        }
-
+        .input-cell:focus { border-color: #d4af37; background: rgba(0, 0, 0, 0.5); }
+        .table-cell { border: 1px solid rgba(212, 175, 55, 0.2); padding: 8px; }
         .header-cell {
             background: rgba(212, 175, 55, 0.1);
             color: #d4af37;
@@ -71,22 +60,27 @@
             object-fit: cover;
             border: 2px solid #d4af37;
         }
+
+        /* Tarix kartochkalari uchun animatsiya */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .history-card { animation: fadeIn 0.5s ease forward; }
     </style>
 </head>
 <body class="p-4 md:p-10">
 
     <div class="max-w-7xl mx-auto">
         <header class="mb-10 text-center flex flex-col items-center">
-    <img src="photo_2026-01-19_18-11-16.jpg" alt="TABRIZ GROUP" class="logo-img mb-4">
-    
-    <h1 class="text-4xl md:text-6xl font-black tracking-tighter uppercase italic">
-        <span class="text-white">TABRIZ</span> <span class="brand-gold">GROUP</span>
-    </h1>
-    <p class="brand-gold font-bold mt-2 uppercase text-xs tracking-[0.2em]">Mebel ishlab chiqarish</p>
-</header>
+            <img src="photo_2026-01-19_18-11-16.jpg" alt="TABRIZ GROUP" class="logo-img mb-4">
+            <h1 class="text-4xl md:text-6xl font-black tracking-tighter uppercase italic">
+                <span class="text-white">TABRIZ</span> <span class="brand-gold">GROUP</span>
+            </h1>
+            <p class="brand-gold font-bold mt-2 uppercase text-xs tracking-[0.2em]">Mebel ishlab chiqarish</p>
+        </header>
 
         <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
-            
             <div class="lg:col-span-1 space-y-6">
                 <div class="glass-card p-6">
                     <h2 class="brand-gold font-black text-sm mb-4 uppercase flex items-center gap-2">
@@ -105,7 +99,7 @@
                     <div class="space-y-3">
                         <input type="text" id="material" class="input-cell" placeholder="Material nomi">
                         <input type="text" id="edgeName" class="input-cell" placeholder="Kromka nomi">
-                        <select id="edgeThickness" class="input-cell">
+                        <select id="edgeThickness" class="input-cell text-white bg-black">
                             <option value="0.4mm">0.4 mm</option>
                             <option value="1.0mm">1.0 mm</option>
                             <option value="2.0mm">2.0 mm</option>
@@ -143,10 +137,26 @@
                     </div>
 
                     <div class="mt-8">
-                        <button onclick="sendOrder()" class="w-full bg-brand-gold text-black py-4 rounded-2xl font-black text-xl hover:opacity-90 transition flex items-center justify-center gap-4">
+                        <button onclick="sendOrder()" class="w-full bg-brand-gold text-black py-4 rounded-2xl font-black text-xl hover:opacity-90 transition flex items-center justify-center gap-4 shadow-lg shadow-yellow-600/20">
                             <span>BUYURTMANI YUBORISH</span>
                             <i class="fas fa-paper-plane"></i>
                         </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="lg:col-span-4 mt-8">
+                <div class="glass-card p-8">
+                    <div class="flex justify-between items-center mb-6">
+                        <h2 class="brand-gold font-black text-xl uppercase tracking-widest flex items-center gap-3">
+                            <i class="fas fa-history"></i> Buyurtmalar Tarixi
+                        </h2>
+                        <button onclick="clearHistory()" class="text-white/30 hover:text-red-500 text-xs uppercase font-bold transition">
+                            Tarixni tozalash
+                        </button>
+                    </div>
+                    <div id="historyContainer" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 text-center">
+                        <div class="lg:col-span-3 text-white/20 py-10 italic">Hozircha buyurtmalar tarixi bo'sh</div>
                     </div>
                 </div>
             </div>
@@ -164,13 +174,14 @@
         window.onload = () => {
             document.getElementById('fullName').value = localStorage.getItem('t_name') || '';
             document.getElementById('phone').value = localStorage.getItem('t_phone') || '';
+            renderHistory();
             for(let i=0; i<4; i++) addRow();
         };
 
         function addRow() {
             const tr = document.createElement('tr');
             tr.innerHTML = `
-                <td class="table-cell"><input type="text" class="w-full bg-transparent outline-none text-sm val-name" placeholder="detal"></td>
+                <td class="table-cell"><input type="text" class="w-full bg-transparent outline-none text-sm val-name" placeholder="detal nomi"></td>
                 <td class="table-cell"><input type="number" class="w-full bg-transparent outline-none text-center font-bold val-len" placeholder="0"></td>
                 <td class="table-cell"><input type="number" class="w-full bg-transparent outline-none text-center font-bold val-width" placeholder="0"></td>
                 <td class="table-cell"><input type="number" class="w-full bg-transparent outline-none text-center font-bold val-count" value="1"></td>
@@ -239,15 +250,63 @@
                     headers: {'Content-Type': 'application/json'},
                     body: JSON.stringify({ chat_id: CHAT_ID, text: msg, parse_mode: 'Markdown' })
                 });
+                
                 if(res.ok) {
-                    if(confirm("✅ Yuborildi! Yana buyurtma bormi?")) {
+                    // Tarixga saqlash
+                    saveToHistory({
+                        material: mat,
+                        edge: edge,
+                        thick: thick,
+                        count: details.length,
+                        date: new Date().toLocaleString('uz-UZ', {hour:'2-digit', minute:'2-digit', day:'2-digit', month:'short'})
+                    });
+
+                    if(confirm("✅ Buyurtma yuborildi! Yana buyurtma bormi?")) {
                         document.getElementById('material').value = '';
                         document.getElementById('edgeName').value = '';
                         document.getElementById('tableBody').innerHTML = '';
                         for(let i=0; i<4; i++) addRow();
                     }
                 }
-            } catch (e) { alert("Xato!"); }
+            } catch (e) { alert("Xato yuz berdi!"); }
+        }
+
+        function saveToHistory(order) {
+            let history = JSON.parse(localStorage.getItem('tabriz_history') || '[]');
+            history.unshift(order);
+            localStorage.setItem('tabriz_history', JSON.stringify(history.slice(0, 12))); // Oxirgi 12 ta buyurtma
+            renderHistory();
+        }
+
+        function renderHistory() {
+            const container = document.getElementById('historyContainer');
+            const history = JSON.parse(localStorage.getItem('tabriz_history') || '[]');
+            
+            if(history.length === 0) return;
+
+            container.innerHTML = history.map(h => `
+                <div class="history-card bg-white/5 border border-white/10 p-5 rounded-3xl text-left hover:border-brand-gold/50 transition duration-300">
+                    <div class="flex justify-between items-start mb-4">
+                        <span class="text-[10px] bg-brand-gold/20 text-brand-gold px-2 py-1 rounded-md font-bold uppercase tracking-widest">${h.date}</span>
+                        <i class="fas fa-check-circle text-brand-gold"></i>
+                    </div>
+                    <div class="font-bold text-white mb-1 truncate">${h.material}</div>
+                    <div class="text-xs text-white/50 mb-4 italic italic">
+                        Kromka: ${h.edge || 'Mavjud emas'} (${h.thick})
+                    </div>
+                    <div class="flex justify-between items-center pt-4 border-t border-white/5">
+                        <span class="text-[10px] text-white/40 uppercase font-bold">Detallar: ${h.count} ta</span>
+                        <span class="text-[10px] text-brand-gold font-bold uppercase underline tracking-tighter cursor-pointer hover:text-white">Takrorlash</span>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function clearHistory() {
+            if(confirm("Tarixni tozalashni xohlaysizmi?")) {
+                localStorage.removeItem('tabriz_history');
+                location.reload();
+            }
         }
     </script>
 </body>
